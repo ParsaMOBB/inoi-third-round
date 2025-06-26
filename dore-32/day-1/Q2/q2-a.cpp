@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int MOD = 10256483;
+
+int add(int a, int b) {
+    return (0ll + a + b) % MOD;
+}
+int mul(int a, int b) {
+    return 1ll * a * b % MOD;
+}
+int Pow(int a, int b) {
+    int res = 1;
+    for (; b; b>>=1, a = mul(a, a)) if (b&1) {
+        res = mul(res, a);
+    }
+    return res;
+}
+int Inv(int a) {
+    return Pow(a, MOD - 2);
+}
+
+const int N = 1500;
+int dp[N][2];
+
+int main() {
+    int n = 1401;
+    dp[1][0] = dp[1][1] = 1;
+    for (int i = 2; i <= n; i++) {
+        dp[i][0] = add(dp[i-1][0], dp[i-1][1]);
+        dp[i][1] = mul(dp[i-1][0], dp[i-1][1]);
+    }   
+    cout << dp[n][1] << '\n'; 
+}
